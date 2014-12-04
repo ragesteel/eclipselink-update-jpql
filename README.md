@@ -13,7 +13,7 @@ I've create a profiles to run with different JPA implementations:
  * datanucleos-4.0.0;
 
 To run test just execute
-mvn -P<profileName> clean package exec:java
+mvn -P_profileName_ clean package exec:java
 
 For any JPA provider other than EclipseLink, I got:
 ```
