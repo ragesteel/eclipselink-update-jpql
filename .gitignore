@@ -1,0 +1,13 @@
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Maven
+target/
+
+# Derby
+derby.log
+
+.hg
+.hgignore
