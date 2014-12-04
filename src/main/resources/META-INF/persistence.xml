@@ -4,6 +4,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="eclipselink-update-jpql" transaction-type="RESOURCE_LOCAL">
         <class>ru.gt2.jpa.eclipselink.entity.Field</class>
+        <shared-cache-mode>ALL</shared-cache-mode>
         <!-- This bug is dissapears when turning off cache
         <shared-cache-mode>NONE</shared-cache-mode>
         -->
@@ -11,9 +12,12 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:eclipselink-update-jpql"/>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
             <property name="javax.persistence.jdbc.user" value="app"/>
+
             <!-- This bug is dissapears when turning off cache
             <property name="eclipselink.cache.shared.default" value="false" />
             -->
+            <property name="hibernate.cache.default_cache_concurrency_strategy" value="read-write" />
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider" />
         </properties>
     </persistence-unit>
 </persistence>

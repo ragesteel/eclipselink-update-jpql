@@ -2,6 +2,7 @@ package ru.gt2.jpa.eclipselink;
 
 import ru.gt2.jpa.eclipselink.entity.Field;
 
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -43,9 +44,28 @@ public class JpqlUpdate {
             }
         });
 
+        cacheCheck();
+
         // Same methods with different results!
         runUpdateAndPrint();
         runUpdateAndPrint();
+    }
+
+    private void cacheCheck() {
+        withinEntityManager(new WithEntityManager() {
+            @Override
+            public void run(EntityManager entityManager) {
+                Field field = entityManager.find(Field.class, 1);
+            }
+        });
+
+        withinEntityManager(new WithEntityManager() {
+            @Override
+            public void run(EntityManager entityManager) {
+                Cache cache = entityManager.getEntityManagerFactory().getCache();
+                System.out.println("Entity cached " + cache.contains(Field.class, 1));
+            }
+        });
     }
 
     private static void createTable() {
@@ -93,6 +113,7 @@ public class JpqlUpdate {
     private static void createAndPersistEntity(int id, EntityManager entityManager) {
         Field field = new Field();
         field.setId(id);
+        field.setPosition(id);
         entityManager.persist(field);
         entityManager.flush();
     }
